@@ -40,7 +40,7 @@ void ofApp::setup(){
     
     // GUI setup
     gui.setup("GUI");
-    gui.add(ampFactor.set("amp factor",0.5,0,1));
+    gui.add(ampFactor.set("amp factor",0.5,-1,1));
     gui.add(flip.set("flip",true));
     gui.add(camEnabled.set("cam mvt",true));
     gui.add(drawFace.set("draw mesh",false));
@@ -76,7 +76,6 @@ void ofApp::update(){
         }
     }
     
-    if(flip){cam.setScale(-1,-1,1);}else{cam.setScale(1,-1,1);}
     
 }
 
@@ -85,9 +84,11 @@ void ofApp::draw(){
     ofBackground(20);
     ofEnableDepthTest();
     cam.begin();
+//    if(flip){cam.setScale(-1,-1,1);}else{cam.setScale(1,-1,1);}
     
     //You can either draw the mesh or the wireframe
     ofPushMatrix();
+    if(flip) {ofScale( -1, -1, 1 );}else{ofScale(1,-1,1);}
     ofTranslate(-vidGrabber.getWidth()/2,-vidGrabber.getHeight()/2);
     if(drawWireframe) {mainMesh.drawWireframe();}else
         if(drawFace){mainMesh.drawFaces();}else
@@ -100,7 +101,7 @@ void ofApp::draw(){
         gui.draw();
     }
     if(camEnabled){cam.enableMouseInput();}else{cam.disableMouseInput();}
-    
+
 }
 
 //--------------------------------------------------------------
